@@ -68,17 +68,15 @@ class TripDetailsUser extends React.Component {
   render() {
     if (!this.state.urls) {
       return (
-        <div className="rxContainer">
-          <h1> User HomePage </h1>
+        <div>
           <TripDetails info={this.state.tripInfo}/>
         </div>
       )
     } else {
       return (
-        <div className="container center">
-          <h1> User HomePage </h1>
-          <TripDetails info={this.state.tripInfo}/>
+        <div>
           <Photos photos={this.state.urls}/>
+          <TripDetails info={this.state.tripInfo}/>
         </div>
       )    
     }
@@ -87,13 +85,12 @@ class TripDetailsUser extends React.Component {
 
 let TripDetails = (props) => {
   return (
-    <div>
-      <h1> Trip Details </h1>
-      <h3> Your trip: {props.info.title} </h3>
-      <h3> About: {props.info.description} </h3>
-      <h3> Start Date: {props.info.start_date} </h3>
-      <h3> End Date: {props.info.end_date} </h3>
-      <h3> Where: {props.info.address} </h3>
+    <div className="mt-1">
+      <h4> Your trip: {props.info.title} </h4>
+      <h4> About: {props.info.description} </h4>
+      <h4> Start Date: {props.info.start_date} </h4>
+      <h4> End Date: {props.info.end_date} </h4>
+      <h4> Where: {props.info.address} </h4>
     </div>
   )
 }
@@ -101,15 +98,22 @@ let TripDetails = (props) => {
 
 let Photos = (props) => {
 
-  console.log(props.photos);
+  var first = props.photos[0];
+  console.log(first, 'first');
+  var rest = props.photos.slice(1);
+
+  console.log(props.photos, 'all photos to display');
   return (
-    <div>
+    <div className="row">
+      <div className="col-xs-12 banner-container">
+        <div className="photobanner">
+          <img className="first" src={first} height="320" width="500"/>
+          {rest.map(photo => {
+           return (<Photo url={photo}/>)
+          })}
+        </div>
 
-    <h3> Photos </h3>
-    {props.photos.map(photo => {
-     return (<Photo url={photo}/>)
-    })}
-
+      </div>
     </div>
   )
 
@@ -117,8 +121,8 @@ let Photos = (props) => {
 
 let Photo = (props) => {
   return (
-    <div>
-    <img src={props.url} />
+    <div className="single-image" >
+    <img src={props.url} height="320" width="500"/>
     </div>
   )
 }
